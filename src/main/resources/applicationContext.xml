@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--配置UserDaoImpl, 通过反射方式, 多态生成UserDao对象-->
+    <bean id="userDao" class="com.itheima.dao.impl.UserDaoImpl"></bean>
+
+    <bean id="user1" class="com.itheima.domain.User">
+        <property name="name" value="haha"></property>
+        <property name="age" value="12"></property>
+    </bean>
+    <bean id="user2" class="com.itheima.domain.User">
+        <property name="name" value="hehe"></property>
+        <property name="age" value="14"></property>
+    </bean>
+
+    <bean id="userService" class="com.itheima.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+        <property name="name" value="sunrui"/>
+        <property name="list">
+            <list>
+                <value>张三</value>
+                <value>李四</value>
+                <value>王二</value>
+            </list>
+        </property>
+
+        <property name="map">
+            <map>
+                <entry key="u1" value-ref="user1"></entry>
+                <entry key="u2" value-ref="user2"></entry>
+            </map>
+        </property>
+
+        <property name="userList">
+            <list>
+                <bean class="com.itheima.domain.User">
+                    <property name="name" value="shanshan"></property>
+                    <property name="age" value="22"></property>
+                </bean>
+                <ref bean="user1"></ref>
+                <ref bean="user2"></ref>
+            </list>
+        </property>
+
+        <property name="properties">
+            <props>
+                <prop key="p1">nihaoa</prop>
+                <prop key="p2">wobuhao</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--导入其他子配置文件-->
+    <import resource="applicationContext-me.xml"></import>
+
+</beans>
